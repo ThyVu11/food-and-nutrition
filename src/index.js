@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import {createRoot} from 'react-dom/client';
 import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
@@ -14,7 +14,7 @@ import { createTheme , ThemeProvider } from '@mui/material/styles';
 
 
 const sagaMiddleware = createSagaMiddleware();
-const root = ReactDOM.createRoot(document.getElementById('react-root'));
+const root = createRoot(document.getElementById('react-root'));
 
 
 const middlewareList = process.env.NODE_ENV === 'development' ?
@@ -63,7 +63,6 @@ root.render(
       <App />
     </ThemeProvider>
   </Provider>,
-  document.getElementById('react-root'),
 );
 
 serviceWorker.register();
