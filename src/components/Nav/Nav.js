@@ -58,7 +58,7 @@ const Nav = (props) => {
   )&& JSON.parse(
     localStorage.getItem("notification")
   ).notificationNumber;
-  //let userIdInLocalStore = JSON.parse(localStorage.getItem("notification")).userId;
+  // let userIdInLocalStore = JSON.parse(localStorage.getItem("notification")).userId;
 
   const [state, setState] = React.useState({
     left: false,
@@ -83,7 +83,7 @@ const Nav = (props) => {
     } else {
       setInvisible(true);
     }
-    setCount(notificationNumberInLocalStore);
+    // setCount(notificationNumberInLocalStore);
   });
 
   const toggleDrawer = (anchor, open) => (event) => {
