@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 
 const app = express();
+const cors = require('cors');
 const bodyParser = require("body-parser");
 const sessionMiddleware = require("./modules/session-middleware");
 
@@ -20,6 +21,14 @@ const post = require("./routes/post.router");
 // Body parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Enable CORS for the React dev server so browser can send cookies
+app.use(
+  cors({
+    origin: process.env.CLIENT_ORIGIN || 'http://localhost:3000',
+    credentials: true,
+  })
+);
 
 // Passport Session Configuration //
 app.use(sessionMiddleware);

@@ -26,7 +26,6 @@ router.post("/register", (req, res, next) => {
       console.log(err);
       res.sendStatus(500);
     });
-    console.log("pool", pool);
 });
 
 router.post("/login", userStrategy.authenticate("local"), (req, res) => {
