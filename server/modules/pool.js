@@ -17,7 +17,10 @@ if (process.env.DATABASE_URL) {
     host: params.hostname,
     port: params.port,
     database: params.pathname.split('/')[1],
-    ssl: { rejectUnauthorized: false },
+    // Only enable SSL for non-local hosts. Local Postgres typically doesn't support SSL.
+    ssl: ['localhost', '127.0.0.1'].includes(params.hostname)
+      ? false
+      : { rejectUnauthorized: false },
     max: 10, // max number of clients in the pool
     idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
   };

@@ -11,6 +11,7 @@ import rootSaga from './redux/sagas'; // imports ./redux/sagas/index.js
 import App from './App/App';
 
 import { createTheme , ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider as StylesThemeProvider } from '@mui/styles';
 
 
 const sagaMiddleware = createSagaMiddleware();
@@ -59,9 +60,11 @@ const theme = createTheme({
 
 root.render(
   <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
+    <StylesThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </StylesThemeProvider>
   </Provider>,
 );
 

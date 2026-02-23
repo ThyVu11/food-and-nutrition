@@ -19,6 +19,7 @@ function* loginUser(action) {
     if (error.response.status === 401) {
       yield put({ type: 'LOGIN_FAILED' });
     } else {
+      console.log('Unexpected error during login:', error);
       yield put({ type: 'LOGIN_FAILED_NO_CODE' });
     }
   }
