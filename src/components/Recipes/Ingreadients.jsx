@@ -21,7 +21,7 @@ class Ingreadients extends Component {
           checked={this.state.checked}
           onChange={this.handleCheckBoxChange}
           inputProps={{ 'aria-label': 'primary checkbox' }}
-        />{this.props.i.originalString}</Typography>
+        />{this.props.i.original}</Typography>
       </div>
     )
   }

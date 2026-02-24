@@ -43,9 +43,9 @@ class ComponentToPrint extends Component {
         />
         <CardContent>
           <Typography paragraph>Ingreadients: </Typography>
-          {item.extendedIngredients.map((i) => {
+          {item.extendedIngredients.map((i, key) => {
             return (
-              <div key={i.originalString}>
+              <div key={key}>
                 <Ingreadients i={i} />
               </div>
             );

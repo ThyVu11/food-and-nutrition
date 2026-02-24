@@ -3,7 +3,7 @@ import './Footer.css'
 
 const Footer = () => (
   <footer>
-    &copy; Thy Christiansen
+    &copy; Thy 2024
   </footer>
 );
 

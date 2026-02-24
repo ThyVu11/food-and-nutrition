@@ -120,10 +120,10 @@ class RecipeDetail extends Component {
 
       let notificationInfo = {
         userId: this.props.reduxState.user.id,
-        // notificationNumber: Number(
-        //   this.state.addItemtoFavorite.length + 
-        //   JSON.parse(localStorage.getItem("notification")).notificationNumber
-        // )
+        notificationNumber: Number(
+          this.state.addItemtoFavorite.length + 
+          JSON.parse(localStorage.getItem("notification")).notificationNumber
+        )
       }
       localStorage.setItem("notification", JSON.stringify(notificationInfo));
     }
@@ -146,7 +146,7 @@ class RecipeDetail extends Component {
   addToFavorite = async () => {
     let notificationInfo = {
       userId: this.props.reduxState.user.id,
-      // notificationNumber:this.state.addItemtoFavorite.length +1
+      notificationNumber:this.state.addItemtoFavorite.length +1
       
     }
     console.log(notificationInfo)
