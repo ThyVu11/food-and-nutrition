@@ -136,6 +136,7 @@ const MenuProps = {
 
 let i = 0;
 let showThisPage;
+let apiRecipe = process.env.REACT_APP_API_RECIPE
 
 class FindRecipes extends Component {
   state = {
@@ -339,7 +340,7 @@ class FindRecipes extends Component {
 
   render() {
     const { classes } = this.props;
-
+    
     if (this.state.page === 1) {
       showThisPage = this.props.getRecipe.slice(i, i + 25).map((item) => {
         window.scrollTo(0, 0);
@@ -348,6 +349,7 @@ class FindRecipes extends Component {
     } else if (this.state.page === 2) {
       showThisPage = this.props.getRecipe.slice(i + 25, i + 50).map((item) => {
         window.scrollTo(0, 0);
+        console.log('item from page 2', item)
         return this.cardDisplayRecipe(item)
       });
     } else if (this.state.page === 3) {
@@ -361,13 +363,13 @@ class FindRecipes extends Component {
         return this.cardDisplayRecipe(item)
       });
     }
-    //Delete after test
-    showThisPage = getRecipeReducer.map((item) => {
-      return this.cardDisplayRecipe(item)
-    });
-    //Delete after test
-
-    console.log(this.props.getRecipe.length);
+    // IF REACT_APP_API_RECIPE exists, map through the getRecipeReducer, if not, map through the getRecipeReducer from recipeToTest.js
+    if (!apiRecipe){
+      showThisPage = getRecipeReducer.map((item) => {
+        return this.cardDisplayRecipe(item)
+      });
+    }
+    
 
     return (
       <Container className={classes.root}>
@@ -565,7 +567,7 @@ class FindRecipes extends Component {
                     "seafood",
                     "shellfish",
                     "soy",
-                    " sulfite",
+                    "sulfite",
                     "tree nut",
                     "wheat",
                   ].map((name) => (
@@ -594,10 +596,8 @@ class FindRecipes extends Component {
           </Grid>
           <Grid item xs={9}>
             <Grid container spacing={1}>
-              {/* {this.props.getRecipe.length === 0 ? ( */}
-
-              {/* Delete getRecipeReducer.length === 0 after test */}
-              {getRecipeReducer.length === 0 ? (
+              {/* {getRecipeReducer.length === 0 ? ( */}
+              {!apiRecipe ? getRecipeReducer.length === 0  : this.props.getRecipe.length === 0 ? (
                 <Grid item xs={12}>
                   <Fade in={true}>
                     <CircularProgress />

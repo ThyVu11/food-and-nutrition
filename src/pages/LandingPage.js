@@ -69,6 +69,7 @@ const useStyles = (theme) => ({
     },
   },
 });
+let apiRecipe = process.env.REACT_APP_API_RECIPE
 
 class LandingPage extends Component {
   state = {
@@ -368,10 +369,9 @@ class LandingPage extends Component {
                 </Button>
               </ButtonGroup>
             </div>
-            {/* Uncomment after test */}
-            {/* {reduxState.getRandomRecipeReducer.map((item) => {
+            {/* Checking if apiRecipe is true, if so, map through the getRandomRecipeReducer, if not, map through the getRecipeReducer */}
+            {apiRecipe ? reduxState.getRandomRecipeReducer.map((item) => {
               return (
-                <>
                   <Card className={classes.root}>
                     <RecipeDetail item={item} />
                     <CardContent>
@@ -388,15 +388,9 @@ class LandingPage extends Component {
                       })}
                     </CardContent>
                   </Card>
-                </>
               );
-            })} */}
-            {/* Uncomment after test */}
-
-            {/* Delete after test */}
-            {getRecipeReducer.map((item) => {
+            }) : getRecipeReducer.map((item) => {
               return (
-                <>
                   <Card className={classes.root} key={item.id}>
                     <RecipeDetail item={item} />
                     <CardContent>
@@ -414,10 +408,8 @@ class LandingPage extends Component {
                       })}
                     </CardContent>
                   </Card>
-                </>
               );
             })}
-            {/* Delete after test */}
           </Grid>
         </div>
       </Container>
