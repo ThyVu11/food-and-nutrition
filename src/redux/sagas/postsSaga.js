@@ -22,10 +22,9 @@ function* addPost(action) {
     };
 
     if (action.payload.file.length === 0) {
+
       yield axios.post(`/api/post/withoutImage`, action.payload);
-      // console.log('------> item', action.payload.itemData)
     } else {
-      console.log(action.payload.file);
       const data = new FormData();
 
       action.payload.file.map((file) => 

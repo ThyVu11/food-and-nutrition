@@ -17,19 +17,23 @@ const { uploadPost, generateSignedUrls } = require('../modules/imageHandler');
 
 //-----------------Post-----------------
 router.get("/",rejectUnauthenticated, (req, res) => {
-  const queryText = `SELECT  "user".name, p.*, u.users_who_liked_array, like_id
-  FROM   posts      p
-  LEFT JOIN  ( 
-     SELECT pu.post_id AS id, array_agg(u.name) AS users_who_liked_array, array_agg(pu.id) AS like_id
-     FROM   likes pu
-     JOIN   "user"       u  ON u.id = pu.users_who_liked
-     GROUP  BY pu.post_id
-     ) u USING (id)
-  JOIN "user" 
-  ON p.post_owner_id = "user".id
-  ORDER BY p.id DESC
-  ;
-  `;
+    const queryText = `
+    SELECT usr.name AS owner_name,
+      p.*,
+      likes_agg.users_who_liked_array,
+      likes_agg.like_id
+    FROM posts p
+    LEFT JOIN (
+          SELECT l.post_id AS id,
+            array_agg(u.name) AS users_who_liked_array,
+            array_agg(l.id) AS like_id
+          FROM likes l
+          JOIN "user" u ON u.id = l.user_who_liked
+      GROUP BY l.post_id
+    ) likes_agg ON likes_agg.id = p.id
+    JOIN "user" usr ON p.post_owner_id = usr.id
+    ORDER BY p.id DESC;
+    `;
   pool
     .query(queryText)
     .then((response) => {
@@ -43,7 +47,6 @@ router.post("/withoutImage", (req, res) => {
   let text = req.body.text;
   let time = req.body.time;
   let postOwnerId = req.user.id;
-
   const queryText =
     'INSERT INTO "posts" (content, time, post_owner_id) VALUES ($1, $2, $3)';
   pool
@@ -53,8 +56,6 @@ router.post("/withoutImage", (req, res) => {
 });
 
 router.post('/withImage', upload.array('file', 5), (req, res) => {
-  // console.log("-------post---------->",req)
-
   uploadPost(req, res);
 });
 
@@ -91,7 +92,7 @@ router.post("/like", (req, res) => {
 
   console.log(post_id, userWhoLiked);
   const queryText =
-    'INSERT INTO "likes" (post_id, users_who_liked) VALUES ($1, $2)';
+    'INSERT INTO "likes" (post_id, user_who_liked) VALUES ($1, $2)';
   pool
     .query(queryText, [post_id, userWhoLiked])
     .then(() => res.sendStatus(201))
@@ -101,7 +102,7 @@ router.post("/like", (req, res) => {
 router.delete("/like/:post_id/:user_id", (req, res) => {
   let postId = req.params.post_id;
   let userWhoLiked = req.params.user_id;
-  const queryText = `DELETE FROM "likes" WHERE post_id = $1 AND users_who_liked = $2;`;
+  const queryText = `DELETE FROM "likes" WHERE post_id = $1 AND user_who_liked = $2;`;
   pool
     .query(queryText, [postId, userWhoLiked])
     .then(() => res.sendStatus(201))

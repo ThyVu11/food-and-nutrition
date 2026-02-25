@@ -65,7 +65,7 @@ CREATE TABLE "posts"
     "content" TEXT NOT NULL,
     "image" VARCHAR (200),
     "time" timestamp with time zone,
-    "count_liked" INT NOT NULL
+    "count_liked" INT DEFAULT 0
          REFERENCES "likes" (id)
          ON DELETE CASCADE,
     "comment_id" TEXT
