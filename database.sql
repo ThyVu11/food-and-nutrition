@@ -81,4 +81,15 @@ CREATE TABLE "likes" (
          ON DELETE CASCADE
     );
 
+CREATE TABLE "comments" (
+    "id" SERIAL PRIMARY KEY,
+    "post_id" INT NOT NULL
+         REFERENCES "posts" (id)
+         ON DELETE CASCADE,
+	"content" TEXT NOT NULL,
+    "users_who_commented_id" INT NOT NULL
+         REFERENCES "user" (id)
+         ON DELETE CASCADE,
+	"time" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
+);
 
