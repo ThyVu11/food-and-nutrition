@@ -37,7 +37,8 @@ router.get("/",rejectUnauthenticated, (req, res) => {
   pool
     .query(queryText)
     .then((response) => {
-      generateSignedUrls(res, response.rows);
+      // generateSignedUrls(res, response.rows);
+      res.send(response.rows);
     })
     .catch((error) => console.log(error));
 });

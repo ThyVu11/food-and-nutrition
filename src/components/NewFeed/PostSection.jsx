@@ -37,7 +37,6 @@ class PostSection extends Component {
   render() {
     const { classes, posts } = this.props;
 
-    console.log(posts)
     return (
       <Grid item xs={6} className={classes.root}>
         <PostForm />

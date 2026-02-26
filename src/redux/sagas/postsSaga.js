@@ -1,7 +1,7 @@
 import axios from "axios";
 import { put, takeLatest } from "redux-saga/effects";
 
-function* fetchAllPost(action) {
+function* fetchAllPost() {
   try {
     const response = yield axios.get(`/api/post`);
     yield put({

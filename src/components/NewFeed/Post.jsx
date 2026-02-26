@@ -253,13 +253,12 @@ const Post = (props) => {
             </Typography>
           )}
         </CardContent>
-
        
-        {post.image.includes("empty") === true ? (
+        {/* {post.image.includes("empty") === true ? (
           ""
         ) : (
           <ImageSlider post={post} />
-        )}
+        )} */}
 
         <CardActions disableSpacing className={classes.cardAction}>
           <p onClick={handleClickDialogOpen}>
