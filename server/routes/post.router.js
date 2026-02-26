@@ -128,7 +128,6 @@ router.post("/comment", (req, res) => {
 
 router.get("/comment/:id", (req, res) => {
   postId = req.params.id;
-  console.log("post Id---->",postId);
   const queryText = `
   SELECT posts.*, comments.*, "user".name
   FROM posts
@@ -143,7 +142,7 @@ router.get("/comment/:id", (req, res) => {
   pool
     .query(queryText, [postId])
     .then((result) => {
-      console.table(result.rows);
+      // console.table(result.rows);
       res.send(result.rows);
     })
     .catch((error) => console.log(error));
